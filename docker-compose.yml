@@ -1,0 +1,39 @@
+version: '3.9'
+
+volumes:
+  mongo_db:
+    external: true
+
+networks:
+  threads:
+    external: true
+
+services:
+  backend:
+    build:
+      context: .
+    container_name: backend
+    ports:
+      - "5000:5000"
+    networks:
+      - threads
+    env_file:
+      - .env
+    restart: always
+
+  mongodb:
+    hostname: '${MONGO_DB_HOST}'
+    image: mongo:5.0
+    ports:
+      - '${MONGO_DB_EXPOSED_PORT}:${MONGO_DB_PORT}'
+    volumes:
+      - 'mongo_db:/data/db'
+    env_file:
+      - .env
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=anish
+    networks:
+      threads:
+        aliases:
+          - ${MONGO_DB_HOST}
