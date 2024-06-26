@@ -5,7 +5,12 @@ networks:
     external: true
 
 services:
-  backend:
+  threads-core:
     extends:
       file: ./threads-core/docker-compose.yml
-      service: backend
+      service: threads-core
+
+  threads-worker:
+    extends:
+      file: ./threads-worker/docker-compose.yml
+      service: threads-worker

@@ -5,6 +5,8 @@ from flask import request, jsonify, make_response
 class ItemResource(Resource):
     def post(self):
         try:
+            print("INSIDE POST REQUEST")
+
             name = request.json.get('name')
             description = request.json.get('description')
 
@@ -23,6 +25,11 @@ class ItemResource(Resource):
             result = items_collection.insert_one(item)
 
             if result.inserted_id:
+                print("----------- ITEM INSERTED ----------")
+                celery = app.config['CELERY']
+                celery.send_task('celery_app.process_item', args=[str(result.inserted_id)])
+                print("----------- TASK ADDED ----------")
+
                 response_data = {
                     'message': 'Item added successfully',
                     'item_id': str(result.inserted_id)

@@ -1,0 +1,14 @@
+version: '3.9'
+
+networks:
+  threads:
+    external: true
+
+services:
+  threads-worker:
+    build:
+      context: .
+    env_file:
+      - .env
+    networks:
+      - threads
