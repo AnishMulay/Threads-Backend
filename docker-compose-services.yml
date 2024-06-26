@@ -1,0 +1,11 @@
+version: '3.9'
+
+networks:
+  threads:
+    external: true
+
+services:
+  backend:
+    extends:
+      file: ./threads-core/docker-compose.yml
+      service: backend
