@@ -1,6 +1,0 @@
-Flask==3.0.3
-Flask-RESTful==0.3.10
-python-dotenv==1.0.1
-requests==2.31.0
-pymongo==4.7.3
-uwsgi==2.0.21
