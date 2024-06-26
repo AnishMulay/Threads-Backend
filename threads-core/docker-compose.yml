@@ -1,0 +1,18 @@
+version: '3.9'
+
+networks:
+  threads:
+    external: true
+
+services:
+  backend:
+    build:
+      context: .
+    container_name: backend
+    ports:
+      - "5000:5000"
+    networks:
+      - threads
+    env_file:
+      - .env
+    restart: always
