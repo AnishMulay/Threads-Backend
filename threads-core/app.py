@@ -4,6 +4,7 @@ from api.routes import add_routes
 from dotenv import load_dotenv
 from pymongo import MongoClient
 from celery import Celery
+import chromadb
 import os
 
 load_dotenv()
@@ -20,8 +21,11 @@ app = Flask(__name__)
 api = Api(app)
 
 app.config['DEBUG'] = True
-client = MongoClient(os.getenv('MONGODB_URI'))
-app.config['MONGO_CLIENT'] = client
+mongodb_client = MongoClient(os.getenv('MONGODB_URI'))
+app.config['MONGO_CLIENT'] = mongodb_client
+
+chromadb_client = chromadb.HttpClient(host='chromadb', port=8000)
+app.config['CHROMA_CLIENT'] = chromadb_client
 
 celery = make_celery(app)
 app.config['CELERY'] = celery

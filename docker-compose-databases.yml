@@ -3,6 +3,8 @@ version: '3.9'
 volumes:
   mongo_db:
     external: true
+  chroma_db:
+    external: true
 
 networks:
   threads:
@@ -35,3 +37,16 @@ services:
       threads:
         aliases:
           - rabbitmq
+
+  chromadb:
+    image: chromadb/chroma:0.5.3
+    ports:
+      - "8000:8000"
+    environment:
+      - IS_PERSISTENT=TRUE
+    volumes:
+      - chroma_db:/chroma/chroma
+    networks:
+      threads:
+        aliases:
+          - chromadb
