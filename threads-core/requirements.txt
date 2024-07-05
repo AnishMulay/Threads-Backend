@@ -6,3 +6,5 @@ pymongo==4.7.3
 uwsgi==2.0.21
 celery==5.4.0
 chromadb==0.5.3
+bcrypt==4.0.1
+PyJWT==2.6.0

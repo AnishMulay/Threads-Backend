@@ -23,7 +23,7 @@ api = Api(app)
 app.config['DEBUG'] = True
 mongodb_client = MongoClient(os.getenv('MONGODB_URI'))
 app.config['MONGO_CLIENT'] = mongodb_client
-
+app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 chromadb_client = chromadb.HttpClient(host='chromadb', port=8000)
 app.config['CHROMA_CLIENT'] = chromadb_client
 
