@@ -1,5 +1,5 @@
 from flask_restful import Resource
-from flask import current_app as app
+from flask import current_app as app,g
 from flask import request, jsonify, make_response
 import bcrypt
 import jwt  
@@ -55,9 +55,11 @@ class UserResource(Resource):
             return make_response(jsonify(response_data), 500)
         
     @token_required
-    def get(current_user,self):
+    def get(self):
         try:
             print("INSIDE GET USERS")
+            current_user = g.current_user
+            print("current user: ", current_user)
             client = app.config['MONGO_CLIENT']
             db = client.get_database('threads')
             users_collection = db.get_collection('users')

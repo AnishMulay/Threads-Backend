@@ -1,7 +1,7 @@
 from functools import wraps
 import jwt
 from flask import request, abort
-from flask import current_app as app
+from flask import current_app as app,g
 from bson.objectid import ObjectId
 
 def token_required(f):
@@ -29,6 +29,9 @@ def token_required(f):
                 "data": None,
                 "error": "Unauthorized"
             }, 401
+
+            # Add current_user to the request context
+            g.current_user = current_user
         except Exception as e:
             return {
                 "message": "Something went wrong",
@@ -36,6 +39,6 @@ def token_required(f):
                 "error": str(e)
             }, 500
 
-        return f(current_user, *args, **kwargs)
+        return f(*args, **kwargs)
 
     return decorated
