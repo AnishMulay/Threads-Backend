@@ -58,8 +58,8 @@ class UserResource(Resource):
     def get(self):
         try:
             print("INSIDE GET USERS")
-            current_user = g.current_user
-            print("current user: ", current_user)
+            current_user_id = g.current_user_id
+            print("current user: ", current_user_id)
             client = app.config['MONGO_CLIENT']
             db = client.get_database('threads')
             users_collection = db.get_collection('users')
